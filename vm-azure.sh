@@ -40,7 +40,6 @@ az vm create \
     --data-disk-sku $STORAGE_SKU_HDD \
     --data-disk-size-gb 10 \
 
-
 az network nsg rule create \
     --resource-group rg-${projectName} \
     --nsg-name nsgr-${projectName} \
@@ -69,8 +68,7 @@ scp -i $SSH_KEY "/home/${user}/${projectName}-backend/target/*-1.0-SNAPSHOT.jar"
 scp -i $SSH_KEY /home/${user}/scripts/Dockerfile $USERNAME@$VM_IP:/home/$USERNAME/app/
 
 # acessando maquina criada
-ssh -i $SSH_KEY $USERNAME@$VM_IP << EOF
-    
+ssh -i $SSH_KEY $USERNAME@$VM_IP << EOF 
     projectName="mottuVision"
     USERNAME="admmottuvision"
 
@@ -96,6 +94,6 @@ ssh -i $SSH_KEY $USERNAME@$VM_IP << EOF
         echo "IMAGE DOES NOT EXIST"
         exit 1
     fi
-
+    
     sudo docker run -d --name $projectName-backend -p 8080:80 $projectName-backend-image
 EOF
