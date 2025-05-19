@@ -2,7 +2,7 @@
 #outros detalhes descritos no trello
 
 FROM eclipse-temurin:21-jdk
-
+                #trocar
 RUN adduser -h /home/menk -s /bin/bash -D mappingadmin
 
 # cria diretório /app
@@ -13,5 +13,8 @@ COPY . .
 
 # expondo porta 8080
 EXPOSE 8080
+
+USER mappingadmin
                             #nome do aplicativo
 CMD ["java", "-jar", "/app/my-app.jar"]
+
