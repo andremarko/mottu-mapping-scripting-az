@@ -73,16 +73,13 @@ ssh -i $SSH_KEY $USERNAME@$VM_IP << EOF
 
     mvn clean package 
 
-    cd Target
+    cd Target?
 
     # inserir Dockerfile adjunto ao TARGET no backend
 
     sudo groupadd docker
 
     sudo usermod -aG docker $USERNAME
-
-    # confirmar
-    cd "Target"
 
     docker build -t $projectName-backend-image .
 
