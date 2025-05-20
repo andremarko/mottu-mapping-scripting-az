@@ -46,6 +46,8 @@ VM_IP=$(az vm show \
   --query publicIps \
   --output tsv)
 
+scp -i $SSH_KEY "/home/$user/Dockerfile" $USERNAME@$VM_IP:/home/$USERNAME/
+
 ssh -i $SSH_KEY $USERNAME@$VM_IP << EOF 
     projectName="mottu-mapping"
     USERNAME="mappingadmin"
@@ -55,13 +57,16 @@ ssh -i $SSH_KEY $USERNAME@$VM_IP << EOF
 
     sudo yum install -y yum-utils
     sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo 
-    sudo yum install docker-ce docker-ce-cli containerd.io 
+    sudo yum install -y docker-ce docker-ce-cli containerd.io 
 
     sudo systemctl enable docker
     sudo systemctl start docker
 
-    sudo yum install java-21-openjdk
-    sudo yum install maven 
+    sudo groupadd docker
+    sudo usermod -aG docker $USERNAME
+
+    sudo yum install -y java-21-openjdk
+    sudo yum install -y maven 
  
     mkdir /home/$USERNAME/app
 
@@ -73,13 +78,11 @@ ssh -i $SSH_KEY $USERNAME@$VM_IP << EOF
 
     mvn clean package 
 
-    cd Target?
+    mv /home/$USERNAME/Dockerfile /home/$USERNAME/app/mottu-mapping-api-java/target
 
-    # inserir Dockerfile adjunto ao TARGET no backend
+    cd target
 
-    sudo groupadd docker
 
-    sudo usermod -aG docker $USERNAME
 
     docker build -t $projectName-backend-image .
 
