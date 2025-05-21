@@ -52,11 +52,21 @@ az network nsg rule create \
     --source-address-prefixes '*' \
     --destination-address-prefixes '*'
 
+az network nsg wait \
+  --resource-group $RESOURCE_GROUP \
+  --name nsgr-${projectName} \
+  --created
+
 NIC_NAME=$(az vm show \
   --resource-group $RESOURCE_GROUP \
   --name $VM_NAME \
   --query 'networkProfile.networkInterfaces[0].id' \
   --output tsv | awk -F/ '{print $NF}')
+
+az network nic wait \
+  --resource-group $RESOURCE_GROUP \
+  --name $NIC_NAME \
+  --created
 
 az network nic update \
   --resource-group $RESOURCE_GROUP \
