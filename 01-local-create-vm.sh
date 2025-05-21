@@ -35,6 +35,11 @@ az vm auto-shutdown \
   --name $VM_NAME \
   --time 21:30 
 
+az network nsg create \
+  --resource-group $RESOURCE_GROUP \
+  --name nsgr-${projectName} \
+  --location $LOCATION
+
 az network nsg rule create \
     --resource-group $RESOURCE_GROUP \
     --nsg-name nsgr-${projectName} \
@@ -46,3 +51,14 @@ az network nsg rule create \
     --direction Inbound \
     --source-address-prefixes '*' \
     --destination-address-prefixes '*'
+
+NIC_NAME=$(az vm show \
+  --resource-group $RESOURCE_GROUP \
+  --name $VM_NAME \
+  --query 'networkProfile.networkInterfaces[0].id' \
+  --output tsv | awk -F/ '{print $NF}')
+
+az network nic update \
+  --resource-group $RESOURCE_GROUP \
+  --name $NIC_NAME \
+  --network-security-group nsgr-${projectName}
