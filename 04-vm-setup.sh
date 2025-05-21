@@ -13,6 +13,8 @@ sudo systemctl start docker
 sudo groupadd docker || true
 sudo usermod -aG docker $(whoami)
 
+sudo dnf install -y git
+
 sudo dnf install -y unzip
 sudo dnf install -y java-21-openjdk-devel
 
