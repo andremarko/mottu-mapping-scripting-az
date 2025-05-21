@@ -16,7 +16,7 @@ RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:21-jdk
 
-RUN adduser -h /home/mappingadmin -s /bin/bash -D mapping-backend
+RUN useradd -m -s /bin/bash mapping-backend
 
 WORKDIR /app
 
@@ -30,15 +30,3 @@ USER mapping-backend
 EXPOSE 8080
 
 CMD ["java", "-jar", "/app/mottu-mapping-api-0.0.1-SNAPSHOT.jar"]
-
-
-
-
-
-
-
-
-
-
-
-
