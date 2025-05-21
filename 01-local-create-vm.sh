@@ -5,6 +5,8 @@
 set -e
 source ./config.sh
 
+az group create --name $RESOURCE_GROUP --location $LOCATION
+
 az vm create \
     --resource-group $RESOURCE_GROUP \
     --name $VM_NAME \
