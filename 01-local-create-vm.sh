@@ -15,14 +15,23 @@ az vm create \
     --authentication-type ssh \
     --generate-ssh-keys \
     --storage-sku $STORAGE_SKU_OS \
-    --os-disk-size-gb 30 \
-    --data-disk-sku $STORAGE_SKU_HDD \
-    --data-disk-size-gb 10
+    --os-disk-size-gb 30
+
+az disk create \
+    --resource-group $RESOURCE_GROUP \
+    --name ${VM_NAME}_data_disk1 \
+    --size-gb 10 \
+    --sku $STORAGE_SKU_HDD
+
+az vm disk attach \
+    --resource-group $RESOURCE_GROUP \
+    --vm-name $VM_NAME \
+    --name ${VM_NAME}_data_disk1
 
 az vm auto-shutdown \
   --resource-group $RESOURCE_GROUP \
   --name $VM_NAME \
-  --time 2130 \
+  --time 21:30 
 
 az network nsg rule create \
     --resource-group $RESOURCE_GROUP \
