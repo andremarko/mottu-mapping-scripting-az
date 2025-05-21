@@ -2,7 +2,7 @@
 set -e
 source ./config.sh
 
-git clone https://github.com/andremarko/mottu-mapping-api-java.git
+git clone git@github.com/andremarko/mottu-mapping-api-java.git
 
 cd mottu-mapping-api-java
 
