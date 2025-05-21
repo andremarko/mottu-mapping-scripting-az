@@ -19,6 +19,11 @@ az vm create \
     --data-disk-sku $STORAGE_SKU_HDD \
     --data-disk-size-gb 10
 
+az vm auto-shutdown \
+  --resource-group $RESOURCE_GROUP \
+  --name $VM_NAME \
+  --time 2130 \
+
 az network nsg rule create \
     --resource-group $RESOURCE_GROUP \
     --nsg-name nsgr-${projectName} \
