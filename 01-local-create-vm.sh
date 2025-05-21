@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# horario de desligamento
+
 set -e
 source ./config.sh
 

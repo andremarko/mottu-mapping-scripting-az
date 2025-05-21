@@ -28,4 +28,5 @@ else
     exit 1
 fi
 
+# mostrar operação executada no banco
 docker run -d --name "${PROJECT_NAME}-backend" -p 8080:80 "${PROJECT_NAME}-backend-image"
