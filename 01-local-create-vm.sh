@@ -19,6 +19,9 @@ az vm create \
     --storage-sku $STORAGE_SKU_OS \
     --os-disk-size-gb 30
 
+cp /mnt/c/Users/andre/.ssh/id_rsa ~/.ssh/
+chmod 600 ~/.ssh/id_rsa
+
 az disk create \
     --resource-group $RESOURCE_GROUP \
     --name ${VM_NAME}_data_disk1 \
