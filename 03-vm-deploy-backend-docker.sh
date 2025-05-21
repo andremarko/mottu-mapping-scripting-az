@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+source ./config.sh
 
 git clone https://github.com/andremarko/mottu-mapping-api-java.git
 
