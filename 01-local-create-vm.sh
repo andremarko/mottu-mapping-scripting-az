@@ -22,6 +22,18 @@ az network nsg rule create \
     --source-address-prefixes '*' \
     --destination-address-prefixes '*'
 
+az network nsg rule create \
+  --resource-group $RESOURCE_GROUP \
+  --nsg-name nsgr-${projectName} \
+  --name Allow-SSH \
+  --protocol tcp \
+  --priority 1000 \
+  --destination-port-range 22 \
+  --access Allow \
+  --direction Inbound \
+  --source-address-prefixes '*' \
+  --destination-address-prefixes '*'
+
 az vm create \
   --resource-group $RESOURCE_GROUP \
   --name $VM_NAME \
@@ -53,5 +65,4 @@ az vm disk attach \
 az vm auto-shutdown \
   --resource-group $RESOURCE_GROUP \
   --name $VM_NAME \
-  --time 21:30 \
-  --timezone "E. South America Standard Time"
+  --time 0030 \
