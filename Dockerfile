@@ -8,8 +8,7 @@ ARG DB_PASSWORD
 COPY pom.xml .
 COPY src ./src
 
-RUN echo "DB_DATABASE=oracle.fiap.com.br:1521:ORCL" > src/env.properties && \
-    echo "DB_USER=${DB_USER}" >> src/env.properties && \
+RUN echo "DB_USER=${DB_USER}" >> src/env.properties && \
     echo "DB_PASSWORD=${DB_PASSWORD}" >> src/env.properties
 
 RUN mvn clean package -DskipTests
