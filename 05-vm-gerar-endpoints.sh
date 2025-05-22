@@ -1,15 +1,16 @@
 #!/bin/bash
 
-IP=$(ip route get 8.8.8.8 2>/dev/null | awk '{for(i=1;i<=NF;i++) if($i=="src") print $(i+1)}')
-if [ -z "$IP" ]; then
-  echo "Erro: não consegui detectar o IP da máquina."
+IP_PUBLIC=$(curl -s https://checkip.amazonaws.com)
+
+if [ -z "$IP_PUBLIC" ]; then
+  echo "Erro: não consegui detectar o IP público da máquina."
   exit 1
 fi
 
 PORT=8080
-BASE_URL="http://${IP}:${PORT}/api"
+BASE_URL="http://${IP_PUBLIC}:${PORT}/api"
 
-echo "Gerando lista de URLs com IP da VM ($IP) e porta $PORT..."
+echo "Gerando lista de URLs com IP público da VM ($IP_PUBLIC) e porta $PORT..."
 echo ""
 
 cat <<EOF > endpoints_completo.txt
@@ -44,4 +45,3 @@ EOF
 
 echo "Arquivo 'endpoints_completo.txt' gerado com sucesso. Confira o conteúdo:"
 cat endpoints_completo.txt
-
